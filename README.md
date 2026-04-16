@@ -205,15 +205,6 @@ pytest
 
 ---
 
-## 🧠 Interview Talking Points
-
-- Designed full ML lifecycle system  
-- Solved reproducibility + deployment  
-- Integrated monitoring + orchestration  
-- Handled real-world issues like imports (pytest.ini)
-
----
-
 ## 📌 Author
 
 Machine Learning Engineering Portfolio Project
