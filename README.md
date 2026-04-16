@@ -234,15 +234,6 @@ python -m uvicorn api:app --reload
 
 ---
 
-## 🧠 Interview Talking Points
-
-- Built end-to-end MLOps system
-- Integrated MLflow tracking
-- Designed deployment pipeline
-- Added monitoring + orchestration
-
----
-
 ## 📌 Author
 
 Machine Learning Engineering Portfolio Project
