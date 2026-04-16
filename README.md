@@ -26,15 +26,7 @@ This project implements a **production-style MLOps pipeline** covering the full 
 
 ## 🧠 Problem Statement
 
-In real-world ML systems, building a model is only a small part of the problem.
-
-This project addresses:
-
-- Reproducibility of experiments  
-- Model versioning and tracking  
-- Reliable deployment pipelines  
-- Monitoring for data drift  
-- Automation of training workflows  
+This project focuses on building a **reproducible, deployable, and monitorable ML system**, not just a model.
 
 ---
 
@@ -43,21 +35,21 @@ This project addresses:
 ```text
 Raw Data
    ↓
-Data Validation
+Validation
    ↓
 Feature Engineering
    ↓
-Model Training
+Training
    ↓
 MLflow Tracking
    ↓
-Model Artifact Storage
+Model Artifact
    ↓
-FastAPI Deployment
+API Deployment
    ↓
-Monitoring (Drift Detection)
+Monitoring
    ↓
-Airflow Orchestration
+Airflow
 ```
 
 ---
@@ -68,8 +60,8 @@ Airflow Orchestration
 |-------------------|------|
 | Data Processing    | Pandas, NumPy |
 | Modeling           | Scikit-learn |
-| Experiment Tracking| MLflow |
-| API Serving        | FastAPI + Uvicorn |
+| Tracking           | MLflow |
+| API                | FastAPI + Uvicorn |
 | Monitoring         | Evidently |
 | Orchestration      | Airflow |
 | Containerization   | Docker |
@@ -93,51 +85,55 @@ mlops-pipeline/
 │   ├── data_validation.py
 │   ├── features.py
 │   ├── train.py
-│   ├── evaluate.py
-│   └── utils.py
+│   └── evaluate.py
 ├── monitoring/
 │   └── drift.py
 ├── artifacts/
-│   ├── model.joblib
-│   └── metrics.json
 ├── api.py
 ├── main.py
 ├── config.py
 ├── requirements.txt
 ├── Dockerfile
 ├── docker-compose.yml
+├── pytest.ini
 ├── tests/
 └── README.md
 ```
 
 ---
 
-## 📊 Data Pipeline
+## 🧪 Pytest Configuration
 
-- Input data stored in `data/data.csv`
-- Validation ensures:
-  - No missing values
-  - Target column exists
-- Feature pipeline transforms raw data into model-ready format
+Create a `pytest.ini` file:
+
+```ini
+[pytest]
+pythonpath = .
+```
+
+This ensures imports like:
+
+```python
+from src.data_validation import validate_data
+```
+
+work correctly without needing package restructuring.
 
 ---
 
-## 🧠 Model Training
+## 📊 Model Training
 
-- Model: Logistic Regression
+- Logistic Regression model
 - Tracks:
-  - Parameters
-  - Metrics (accuracy, precision, recall, F1)
-- Logs:
-  - Model artifact
-  - Metrics JSON
-  - Experiment metadata (MLflow)
+  - Accuracy
+  - Precision
+  - Recall
+  - F1 score
+- Logs to MLflow
 
 ---
 
-## 📈 Experiment Tracking (MLflow)
-
-Run:
+## 📈 MLflow Tracking
 
 ```bash
 mlflow ui
@@ -145,15 +141,11 @@ mlflow ui
 
 Open:
 
-```text
 http://127.0.0.1:5000
-```
 
 ---
 
-## 🌐 API Deployment
-
-Start API:
+## 🌐 API
 
 ```bash
 python -m uvicorn api:app --reload
@@ -161,38 +153,17 @@ python -m uvicorn api:app --reload
 
 Open:
 
-```text
 http://127.0.0.1:8000/docs
-```
 
 ---
 
-### POST `/predict`
+## 📉 Monitoring
 
-```json
-{
-  "feature1": 5.0,
-  "feature2": 3.0
-}
+Drift report:
+
 ```
-
----
-
-## 📉 Monitoring (Data Drift)
-
-- Uses Evidently AI
-- Output:
-
-```text
 artifacts/drift_report.html
 ```
-
----
-
-## ⛅ Airflow
-
-- DAG orchestrates training pipeline
-- Enables scheduling + automation
 
 ---
 
@@ -205,15 +176,7 @@ docker run -p 8000:8000 mlops-pipeline
 
 ---
 
-## 🧪 Testing
-
-```bash
-pytest
-```
-
----
-
-## ▶️ How to Run
+## ▶️ Run Project
 
 ```bash
 pip install -r requirements.txt
@@ -223,14 +186,31 @@ python -m uvicorn api:app --reload
 
 ---
 
-## 🔥 Key Highlights
+## 🧪 Run Tests
 
-- Full ML lifecycle pipeline  
-- MLflow experiment tracking  
+```bash
+pytest
+```
+
+---
+
+## 🔥 Highlights
+
+- End-to-end ML pipeline  
+- MLflow integration  
 - API deployment  
 - Drift monitoring  
 - Airflow orchestration  
-- Docker + CI/CD  
+- CI/CD ready  
+
+---
+
+## 🧠 Interview Talking Points
+
+- Designed full ML lifecycle system  
+- Solved reproducibility + deployment  
+- Integrated monitoring + orchestration  
+- Handled real-world issues like imports (pytest.ini)
 
 ---
 
