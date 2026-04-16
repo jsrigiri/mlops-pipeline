@@ -7,3 +7,4 @@ uvicorn==0.44.0
 joblib==1.5.3
 pytest==9.0.3
 evidently==0.7.21
+apache-airflow==3.2.0
