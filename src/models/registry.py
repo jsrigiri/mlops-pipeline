@@ -2,7 +2,10 @@ import json
 import os
 import joblib
 import mlflow
+
 from config import MODEL_PATH, FEATURES_PATH, METRICS_PATH, MLFLOW_TRACKING_URI
+
+EXPERIMENT_NAME = "mlops_pipeline"
 
 
 def save_artifacts(model, feature_columns, metrics):
@@ -17,6 +20,7 @@ def save_artifacts(model, feature_columns, metrics):
 
 def log_model(model):
     mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
+    mlflow.set_experiment(EXPERIMENT_NAME)
 
     with mlflow.start_run():
         mlflow.log_artifact(MODEL_PATH)
