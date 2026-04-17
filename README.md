@@ -1,55 +1,66 @@
-# 🚀 MLOps Pipeline (End-to-End Production ML System)
+# 🚀 MLOps Pipeline System (ML + XGBoost + LightGBM + GPU + Airflow)
 
 ![Python](https://img.shields.io/badge/Python-3.10+-blue)
-![MLflow](https://img.shields.io/badge/Tracking-MLflow-orange)
-![FastAPI](https://img.shields.io/badge/API-FastAPI-green)
-![Airflow](https://img.shields.io/badge/Orchestration-Airflow-red)
-![Docker](https://img.shields.io/badge/Container-Docker-2496ED)
+![ML](https://img.shields.io/badge/Models-XGBoost%20%7C%20LightGBM-orange)
+![API](https://img.shields.io/badge/API-FastAPI-green)
+![Orchestration](https://img.shields.io/badge/Orchestration-Airflow-purple)
+![Tests](https://img.shields.io/badge/Tests-Pytest-blue)
 ![Status](https://img.shields.io/badge/Status-Production--Ready-brightgreen)
 
 ---
 
 ## 📌 Overview
 
-This project implements a **production-style MLOps pipeline** covering the full machine learning lifecycle:
+This project builds a **production-grade MLOps pipeline** for training, deploying, and monitoring machine learning models.
 
-- Data validation  
-- Feature engineering  
-- Model training & evaluation  
-- Experiment tracking (MLflow)  
-- Model deployment (FastAPI)  
-- Monitoring (data drift)  
-- Workflow orchestration (Airflow)  
-- CI/CD integration  
+It supports:
+
+- Regression → continuous prediction  
+- Classification → binary prediction  
+- Multiple models:
+  - Linear / Logistic (baseline)
+  - XGBoost
+  - LightGBM  
+- Optional GPU acceleration  
+- MLflow model tracking  
+- Airflow orchestration  
+- FastAPI inference API  
+- Comprehensive pytest coverage  
 
 ---
 
 ## 🧠 Problem Statement
 
-This project focuses on building a **reproducible, deployable, and monitorable ML system**, not just a model.
+Build a scalable ML system that:
+
+- Automates data → training → deployment  
+- Tracks experiments and artifacts  
+- Serves predictions via API  
+- Monitors performance and drift  
+- Enables reproducibility via pipelines  
 
 ---
 
-## 🏗 System Architecture
+## 🏗 Architecture
 
 ```text
 Raw Data
    ↓
-Validation
+Preprocessing
    ↓
 Feature Engineering
    ↓
-Training
+Model Training (ML / Boosting)
    ↓
-MLflow Tracking
+Evaluation
    ↓
-Model Artifact
+MLflow Registry
    ↓
 API Deployment
    ↓
-Monitoring
+Monitoring + Drift Detection
    ↓
-Airflow
+Airflow Orchestration
 ```
 
 ---
@@ -59,152 +70,219 @@ Airflow
 | Layer              | Tools |
 |-------------------|------|
 | Data Processing    | Pandas, NumPy |
-| Modeling           | Scikit-learn |
-| Tracking           | MLflow |
-| API                | FastAPI + Uvicorn |
-| Monitoring         | Evidently |
+| Modeling           | Scikit-learn, XGBoost, LightGBM |
 | Orchestration      | Airflow |
-| Containerization   | Docker |
-| CI/CD              | GitHub Actions |
+| Experiment Tracking| MLflow |
+| API                | FastAPI |
+| Testing            | Pytest |
 
 ---
 
 ## 📂 Project Structure
 
 ```text
-mlops-pipeline/
-├── .github/
-│   └── workflows/
-│       └── ci.yml
-├── airflow/
-│   └── dags/
-│       └── training_pipeline.py
+mlops-system/
 ├── data/
-│   └── data.csv
+│   └── sample.csv
 ├── src/
-│   ├── data_validation.py
-│   ├── features.py
-│   ├── train.py
-│   └── evaluate.py
-├── monitoring/
-│   └── drift.py
+│   ├── data/preprocess.py
+│   ├── features/build_features.py
+│   ├── models/train.py
+│   ├── models/predict.py
+│   ├── models/evaluate.py
+│   ├── models/registry.py
+│   ├── monitoring/drift.py
+│   ├── monitoring/metrics.py
+├── airflow/
+│   └── dags/training_pipeline.py
 ├── artifacts/
-├── api.py
-├── main.py
-├── config.py
-├── requirements.txt
-├── Dockerfile
-├── docker-compose.yml
-├── pytest.ini
+├── mlruns/
 ├── tests/
+│   ├── test_train.py
+│   ├── test_predict.py
+│   ├── test_api.py
+├── api/app.py
+├── train_pipeline.py
+├── generate_data.py
+├── config.py
+├── pytest.ini
+├── requirements.txt
 └── README.md
 ```
 
 ---
 
-## 🧪 Pytest Configuration
+## 🧠 Models Supported
 
-Create a `pytest.ini` file:
+### Regression
+- Linear Regression  
+- XGBoost Regressor  
+- LightGBM Regressor  
 
-```ini
-[pytest]
-pythonpath = .
-```
+### Classification
+- Logistic Regression  
+- XGBoost Classifier  
+- LightGBM Classifier  
 
-This ensures imports like:
+---
+
+## ⚡ GPU Support
+
+Optional GPU acceleration:
 
 ```python
-from src.data_validation import validate_data
+USE_GPU = True
 ```
 
-work correctly without needing package restructuring.
+### Behavior
+- Uses GPU if available  
+- Falls back to CPU automatically  
+- Works on all machines  
 
 ---
 
-## 📊 Model Training
+## 🧪 Testing (Pytest)
 
-- Logistic Regression model
-- Tracks:
-  - Accuracy
-  - Precision
-  - Recall
-  - F1 score
-- Logs to MLflow
+Run:
+
+```bash
+pytest -v
+```
+
+### Coverage
+
+- Data preprocessing  
+- Feature engineering  
+- Model training (CPU + GPU fallback)  
+- Prediction pipeline  
+- API endpoints  
 
 ---
 
-## 📈 MLflow Tracking
+## ▶️ How to Run
+
+### 1. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+### 2. Generate data
+
+```bash
+python generate_data.py
+```
+
+---
+
+### 3. Train pipeline
+
+```bash
+python train_pipeline.py
+```
+
+---
+
+### 4. Start API
+
+```bash
+python -m uvicorn api.app:app --reload
+```
+
+Open:
+
+```
+http://127.0.0.1:8000/docs
+```
+
+---
+
+### 5. Run Airflow (optional)
+
+```bash
+airflow standalone
+```
+
+Trigger DAG:
+```
+mlops_training_pipeline
+```
+
+---
+
+## 📊 MLflow Tracking
+
+Run UI:
 
 ```bash
 mlflow ui
 ```
 
-Open:
-
-http://127.0.0.1:5000
+Tracks:
+- model artifacts  
+- feature columns  
+- metrics  
 
 ---
 
-## 🌐 API
+## 🔌 API Usage (Swagger Examples)
 
-```bash
-python -m uvicorn api:app --reload
+Go to:
+
 ```
-
-Open:
-
 http://127.0.0.1:8000/docs
-
----
-
-## 📉 Monitoring
-
-Drift report:
-
-```
-artifacts/drift_report.html
 ```
 
----
+### Request
 
-## 🐳 Docker
-
-```bash
-docker build -t mlops-pipeline .
-docker run -p 8000:8000 mlops-pipeline
+```json
+{
+  "feature1": 0.4,
+  "feature2": -0.8,
+  "feature3": 0.2,
+  "feature4": 1.1
+}
 ```
 
 ---
 
-## ▶️ Run Project
+### Expected Response
 
-```bash
-pip install -r requirements.txt
-python main.py
-python -m uvicorn api:app --reload
+```json
+{
+  "task_type": "regression",
+  "prediction": 0.72
+}
 ```
 
 ---
 
-## 🧪 Run Tests
+## 🔥 Key Highlights
 
-```bash
-pytest
-```
-
----
-
-## 🔥 Highlights
-
-- End-to-end ML pipeline  
-- MLflow integration  
-- API deployment  
-- Drift monitoring  
+- End-to-end MLOps pipeline  
+- Regression + classification modeling  
+- XGBoost & LightGBM integration  
+- GPU-aware training with fallback  
+- MLflow experiment tracking  
 - Airflow orchestration  
-- CI/CD ready  
+- API deployment  
+- Strong test coverage  
+
+---
+
+## 🧠 Talking Points
+
+- Built full MLOps system from data → deployment  
+- Integrated Airflow for pipeline orchestration  
+- Used MLflow for experiment tracking  
+- Designed GPU-aware training pipelines  
+- Created production-ready API  
+- Implemented monitoring and drift detection  
 
 ---
 
 ## 📌 Author
 
-Machine Learning Engineering Portfolio Project
+Machine Learning + Quant + MLOps Portfolio Project
