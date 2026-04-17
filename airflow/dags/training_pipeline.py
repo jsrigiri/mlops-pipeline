@@ -11,7 +11,6 @@ from src.models.predict import predict_model
 from src.models.evaluate import evaluate_model
 from src.models.registry import save_artifacts, log_model
 
-
 @dag(
     dag_id="mlops_training_pipeline",
     schedule=None,
